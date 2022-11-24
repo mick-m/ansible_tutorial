@@ -1,2 +1,9 @@
-192.168.1.82 apache_package=apache2 php_package=libapache2-mod-php 
-#if CentOS, you could declare alternative package  names for that host
+[web_servers]
+192.168.1.82
+192.168.1.30
+
+[db_servers]
+192.168.1.234
+
+[file_servers]
+192.168.1.234
