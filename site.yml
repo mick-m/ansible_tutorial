@@ -4,19 +4,30 @@
   become: true
   pre_tasks:
 
-    - name: install updates (CentOS)
+    - name: update repo cache (CentOS)
       tags: always
       dnf:
-        update_only: yes
         update_cache: yes
+      changed_when: false # won't be considered a change by Ansible. Keeps output clean
       when: ansible_distribution == "CentOS"
 
-    - name: install updates (Ubuntu)
+    - name: update repo cache (Ubuntu)
       tags: always
       apt:
-        upgrade: dist
         update_cache: yes
+      changed_when: false
       when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  tasks:
+
+  # placeholder duplicates bootstrap.yml. Left in case we need to subsequently revoke (state:absent) or add new key later
+  - name: add ssh key for simone
+    tags: always
+    authorized_key:
+      user: simone
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbglM+Y94uo8jWayNpL28Yj0heHf9acymPq+8ySqkd2 ansible"
 
 - hosts: workstations
   become: true
